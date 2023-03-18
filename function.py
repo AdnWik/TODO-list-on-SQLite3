@@ -49,11 +49,14 @@ def add_task():
     # ENTER DEADLINE
     while True:
         print('Enter task deadline (YYYY-MM-DD): ')
-        taskDeadLine = datetime.date.fromisoformat(input(">>> "))
-        if datetime.date.today() <= taskDeadLine:
-            break
-        else:
-            print('Enter correct date !')
+        try:
+            taskDeadLine = datetime.date.fromisoformat(input(">>> "))
+            if datetime.date.today() <= taskDeadLine:
+                break
+            else:
+                print('Enter correct date !')
+        except:
+            print('Enter correct date format !')
 
     # ENTER TASK STATUS
     while True:
@@ -63,11 +66,14 @@ def add_task():
             print(f'{id} - {status}')
             nStatus = id
 
-        taskState = int(input(">>> "))
-        if taskState in range(1,nStatus +1):
-            break
-        else:
-            print("Chose correct task status !")
+        try:
+            taskState = int(input(">>> "))
+            if taskState in range(1,nStatus +1):
+                break
+            else:
+                print("Chose correct task status !")
+        except:
+            print('Enter correct value !')
 
     # INSERT TASK TO DATABASE
     cur.execute("INSERT INTO tasks (task_name, create_date, deadline, task_status_id) VALUES (?,?,?,?)",
