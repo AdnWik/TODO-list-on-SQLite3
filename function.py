@@ -42,13 +42,20 @@ def create_table():
 
 
 def add_task():
-    #TODO:
+    # ENETR TASK NAME
     print('Enter task name: ')
     taskName = input(">>> ")
 
-    print('Enter task deadline (YYYY-MM-DD): ')
-    taskDeadLine = datetime.date.fromisoformat(input(">>> "))
+    # ENTER DEADLINE
+    while True:
+        print('Enter task deadline (YYYY-MM-DD): ')
+        taskDeadLine = datetime.date.fromisoformat(input(">>> "))
+        if datetime.date.today() <= taskDeadLine:
+            break
+        else:
+            print('Enter correct date !')
 
+    # ENTER TASK STATUS
     while True:
         print('Chose task status: ')
         nStatus = 0
@@ -60,8 +67,9 @@ def add_task():
         if taskState in range(1,nStatus +1):
             break
         else:
-            print("Chose correct state!")
+            print("Chose correct task status !")
 
+    # INSERT TASK TO DATABASE
     cur.execute("INSERT INTO tasks (task_name, create_date, deadline, task_status_id) VALUES (?,?,?,?)",
                 (taskName, datetime.date.today(), taskDeadLine, taskState))
     con.commit()
